@@ -4,17 +4,15 @@ const iconv = require('iconv-lite');
 const AnsiToHtml = require('ansi-to-html');
 const ansiToHtml = new AnsiToHtml();
 
-const WS_PORT = 4000; // Port for WebSocket server
-// const MUD_HOST = 'www.fy-vi.cn';
-// const MUD_PORT = 6666;
+const WS_PORT = 3000; // Port for WebSocket server
+const WS_HOST = '0.0.0.0';
 
-const wss = new WebSocket.Server({ port: WS_PORT });
+const wss = new WebSocket.Server({ port: WS_PORT, host: WS_HOST });
 // const wss = new WebSocket.Server({ server, path: '/ws' });
 
 wss.on('connection', (ws) => {
 	console.log('WebSocket client connected');
 	let mudSocket = null;
-	let profileReceived = false;
 
 	ws.once('message', (msg) => {
 		// Expect: { address, port }
@@ -78,4 +76,4 @@ wss.on('connection', (ws) => {
 	});
 });
 
-console.log(`WebSocket-to-TCP proxy running on ws://localhost:${WS_PORT}`);
+console.log(`WebSocket-to-TCP proxy running on ws://${WS_HOST}:${WS_PORT}`);
