@@ -1,0 +1,15 @@
+{
+	"name": "mud-server",
+	"version": "1.0.0",
+	"description": "Node.js/Express server for MUD client and WebSocket proxy",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js"
+	},
+	"dependencies": {
+		"ansi-to-html": "^0.7.1",
+		"express": "^4.18.2",
+		"iconv-lite": "^0.6.3",
+		"ws": "^8.13.0"
+	}
+}
