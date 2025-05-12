@@ -65,7 +65,7 @@ wss.on('connection', (ws) => {
 		ws.on('message', (message) => {
 			try {
 				// Ensure the message is properly encoded before sending to MUD
-				const encodedMessage = Buffer.from(message.toString(), encoding);
+				const encodedMessage = iconv.encode(message.toString(), encoding);
 				mudSocket.write(encodedMessage);
 			} catch (err) {
 				console.error('Error encoding message:', err);
