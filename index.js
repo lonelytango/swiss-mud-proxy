@@ -2,7 +2,11 @@ const WebSocket = require('ws');
 const net = require('net');
 const iconv = require('iconv-lite');
 const AnsiToHtml = require('ansi-to-html');
-const ansiToHtml = new AnsiToHtml();
+const ansiToHtml = new AnsiToHtml({
+	newline: true,
+	escapeXML: true,
+	stream: true,
+});
 
 const WS_PORT = 3000; // Port for WebSocket server
 const WS_HOST = '0.0.0.0';
@@ -15,7 +19,7 @@ wss.on('connection', (ws) => {
 	let mudSocket = null;
 
 	ws.once('message', (msg) => {
-		// Expect: { address, port }
+		// Expect: { address, port, encoding }
 		let profile;
 		try {
 			profile = JSON.parse(msg);
@@ -23,6 +27,7 @@ wss.on('connection', (ws) => {
 			ws.close();
 			return;
 		}
+		const encoding = profile.encoding || 'utf8';
 		mudSocket = net.createConnection(
 			{ host: profile.address, port: Number(profile.port) },
 			() => ws.send('[INFO] Connected to MUD server')
@@ -31,8 +36,8 @@ wss.on('connection', (ws) => {
 		// Forward data from MUD to WebSocket
 		mudSocket.on('data', (data) => {
 			try {
-				// Decode as GBK, then convert ANSI codes to HTML
-				const decodedData = iconv.decode(data, 'gbk');
+				// Decode using selected encoding, then convert ANSI codes to HTML
+				const decodedData = iconv.decode(data, encoding);
 				const htmlData = ansiToHtml.toHtml(decodedData);
 				ws.send(htmlData);
 			} catch (err) {
