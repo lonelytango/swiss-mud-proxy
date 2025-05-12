@@ -3,7 +3,6 @@ const net = require('net');
 const iconv = require('iconv-lite');
 const AnsiToHtml = require('ansi-to-html');
 const ansiToHtml = new AnsiToHtml({
-	newline: true,
 	escapeXML: true,
 	stream: true,
 });
