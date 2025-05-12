@@ -6,6 +6,7 @@ const ansiToHtml = new AnsiToHtml({
 	escapeXML: true,
 	stream: true,
 });
+const he = require('he');
 
 const WS_PORT = 3000; // Port for WebSocket server
 const WS_HOST = '0.0.0.0';
@@ -38,7 +39,9 @@ wss.on('connection', (ws) => {
 				// Decode using selected encoding, then convert ANSI codes to HTML
 				const decodedData = iconv.decode(data, encoding);
 				const htmlData = ansiToHtml.toHtml(decodedData);
-				ws.send(htmlData);
+				// Decode HTML entities back to Unicode
+				const unicodeHtmlData = he.decode(htmlData);
+				ws.send(unicodeHtmlData);
 			} catch (err) {
 				console.error('Error decoding MUD data:', err);
 				ws.send(`[ERROR] Failed to decode MUD data: ${err.message}`);
