@@ -1,10 +1,11 @@
 {
 	"name": "mud-server",
 	"version": "1.0.0",
-	"description": "Node.js/Express server for MUD client and WebSocket proxy",
+	"description": "Web Socket proxy for MUD client",
 	"main": "index.js",
 	"scripts": {
-		"start": "node index.js"
+		"start": "bun index.js",
+		"deploy": "fly deploy"
 	},
 	"dependencies": {
 		"ansi-to-html": "^0.7.1",
