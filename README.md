@@ -53,7 +53,7 @@ successfully logged in as <your email>
 ### Deploy your app to fly.io 
 - Run deployment script:
 ```
-npm run deploy
+bun run deploy
 ```
 
 - After deployment, you will see
