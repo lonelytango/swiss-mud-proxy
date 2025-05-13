@@ -12,7 +12,6 @@ const WS_PORT = 3000; // Port for WebSocket server
 const WS_HOST = '0.0.0.0';
 
 const wss = new WebSocket.Server({ port: WS_PORT, host: WS_HOST });
-// const wss = new WebSocket.Server({ server, path: '/ws' });
 
 wss.on('connection', (ws) => {
 	console.log('WebSocket client connected');
